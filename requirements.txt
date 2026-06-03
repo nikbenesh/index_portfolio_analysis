@@ -1,0 +1,12 @@
+# ── core data & math ──────────────────────────────────────────────────────────
+streamlit>=1.35.0
+yfinance>=0.2.40
+pandas>=2.0.0
+numpy>=1.26.0
+scipy>=1.12.0          # portfolio optimisation (SLSQP, linalg.solve)
+
+# ── visualisation ─────────────────────────────────────────────────────────────
+plotly>=5.20.0
+
+# ── stochastic models ─────────────────────────────────────────────────────────
+arch>=6.3.0            # GARCH(1,1) — volatility clustering model
