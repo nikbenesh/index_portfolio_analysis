@@ -617,7 +617,7 @@ with tab2:
     st.plotly_chart(fig_roll, use_container_width=True)
 
     # Insights
-    avg_corr_idx = corr_matrix.loc[index_cols, index_cols].values
+    avg_corr_idx = corr_matrix.loc[index_cols, index_cols].values.copy()
     np.fill_diagonal(avg_corr_idx, np.nan)
     mean_corr = np.nanmean(avg_corr_idx)
 
@@ -842,7 +842,7 @@ with tab4:
     mean_corr_val = np.nanmean(
         np.where(np.eye(len(index_cols), dtype=bool),
                  np.nan,
-                 corr_matrix.loc[index_cols, index_cols].values)
+                 corr_matrix.loc[index_cols, index_cols].values.copy())
     )
     p_sharpe   = sharpe(port_ret, rf_rate)
     best_idx   = max(index_cols, key=lambda c: sharpe(index_returns[c], rf_rate))
