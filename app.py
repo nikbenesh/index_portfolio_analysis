@@ -516,7 +516,10 @@ tab1, tab2, tab3, tab_ef, tab4, tab5, tab6, tab7 = st.tabs([
 with tab1:
     st.markdown('<div class="section-header">Нормализованная динамика (база = 100)</div>', unsafe_allow_html=True)
 
-    norm = prices[index_cols].div(prices[index_cols].iloc[0]) * 100
+    norm = prices[index_cols].div(prices[index_cols].iloc[1]) * 100
+    # print(index_cols)
+    # print(norm['Kospi (Южная Корея)'])
+    # print(prices['Kospi (Южная Корея)'])
 
     fig = go.Figure()
     for i, col in enumerate(index_cols):
