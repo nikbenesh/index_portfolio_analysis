@@ -128,11 +128,18 @@ INDEX_UNIVERSE = {
 
 DXY_TICKER = "DX-Y.NYB"
 
+# DEFAULT_SELECTION = [
+#     "S&P 500 (США)",
+#     "Euro Stoxx 50 (ЕС)",
+#     "Nikkei 225 (Япония)",
+#     "NSE Nifty 50 (Индия)",
+# ]
+
 DEFAULT_SELECTION = [
-    "S&P 500 (США)",
-    "Euro Stoxx 50 (ЕС)",
-    "Nikkei 225 (Япония)",
+    "NASDAQ 100 (США)",
     "NSE Nifty 50 (Индия)",
+    "Bovespa (Бразилия)",
+    "Kospi (Южная Корея)"
 ]
 
 COLORS = [
@@ -606,6 +613,25 @@ with tab2:
         fig_roll.add_trace(go.Scatter(
             x=roll_dxy.index, y=roll_dxy,
             name="DXY", line=dict(color="#fbbf24", width=1.5, dash="dot"),
+        ))
+    fig_roll.add_hline(y=0, line_dash="dash", line_color="#6b8cba", line_width=0.8)
+    fig_roll.update_layout(
+        template="plotly_dark", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="#0a0e1a",
+        height=350, legend=dict(orientation="h", yanchor="bottom", y=1.02),
+        xaxis=dict(gridcolor="#1e2d45"), yaxis=dict(gridcolor="#1e2d45", range=[-1, 1]),
+        margin=dict(l=0, r=0, t=10, b=0), hovermode="x unified",
+    )
+    st.plotly_chart(fig_roll, use_container_width=True)
+
+    # Rolling correlation (first index vs others)
+    st.markdown('<div class="section-header">Скользящая корреляция с DXY (252 дня)</div>', unsafe_allow_html=True)
+
+    fig_roll = go.Figure()
+    for i, col in enumerate(index_cols, 1):
+        roll_corr = returns[dxy_col].rolling(252).corr(returns[col])
+        fig_roll.add_trace(go.Scatter(
+            x=roll_corr.index, y=roll_corr,
+            name=col, line=dict(color=COLORS[i % len(COLORS)], width=1.5),
         ))
     fig_roll.add_hline(y=0, line_dash="dash", line_color="#6b8cba", line_width=0.8)
     fig_roll.update_layout(
